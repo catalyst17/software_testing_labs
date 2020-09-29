@@ -30,7 +30,8 @@ public class Chapter32Test {
     void givenOneFailureResumptionProbability_throwsException() {
         Bombardamento bombardamento = new Bombardamento();
 
-        assertThrows(Bombardamento.NotAllBombsAreReadyException.class, () -> bombardamento.resume(1));
+        Exception exception = assertThrows(Bombardamento.NotAllBombsAreReadyException.class, () -> bombardamento.resume(1));
+        assertEquals("Не все бобмы готовы. Бомбардировка отменяется.", exception.getMessage());
     }
 
     @Test
