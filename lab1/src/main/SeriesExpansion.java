@@ -4,8 +4,9 @@ public class SeriesExpansion {
     private static final int n = 8;
 
     public static double expanse(double x) {
-        if (x > Math.PI) x = ((x/Math.PI)%2)*Math.PI - 2*Math.PI;
-        if (x < -Math.PI) x = ((x/Math.PI)%2)*Math.PI + 2*Math.PI;
+        x = ((x/Math.PI)%2)*Math.PI;
+        if (x > Math.PI) x -= 2*Math.PI;
+        if (x < -Math.PI) x += 2*Math.PI;
 
         double result = 0;
 

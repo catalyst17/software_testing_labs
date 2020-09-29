@@ -6,8 +6,8 @@ class SeriesExpansionTest {
     private static final double EPSILON = 1e-3;
 
     @Test
-    void testMinusThreePI() {
-        assertEquals(Math.cos(-3*Math.PI), SeriesExpansion.expanse(-3*Math.PI), DELTA);
+    void testMinusTwoPI() {
+        assertEquals(Math.cos(-2*Math.PI), SeriesExpansion.expanse(-2*Math.PI), DELTA);
     }
 
     @Test
@@ -87,7 +87,7 @@ class SeriesExpansionTest {
     }
 
     @Test
-    void testFourPI() {
+    void testOnePointHalfPI() {
         assertEquals(Math.cos(3*Math.PI/2), SeriesExpansion.expanse(3*Math.PI/2), DELTA);
     }
 }
