@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class Chapter32Test {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -30,8 +29,8 @@ public class Chapter32Test {
     void givenOneFailureResumptionProbability_throwsException() {
         Bombardamento bombardamento = new Bombardamento();
 
-        Exception exception = assertThrows(Bombardamento.NotAllBombsAreReadyException.class, () -> bombardamento.resume(1));
-        assertEquals("Не все бобмы готовы. Бомбардировка отменяется.", exception.getMessage());
+        Exception exception = Assertions.assertThrows(Bombardamento.NotAllBombsAreReadyException.class, () -> bombardamento.resume(1));
+        Assertions.assertEquals("Не все бобмы готовы. Бомбардировка отменяется.", exception.getMessage());
     }
 
     @Test
@@ -54,7 +53,7 @@ public class Chapter32Test {
     void givenNoBombardment_checkTheyAreChilling() {
         They they = new They(new ComputerBank());
 
-        assertEquals("Всё в норме, они сидят и отдыхают",
+        Assertions.assertEquals("Всё в норме, они сидят и отдыхают",
                 outContent.toString());
     }
 
@@ -63,7 +62,7 @@ public class Chapter32Test {
         new Bombardamento().resume(0);
         They they = new They(new ComputerBank());
 
-        assertEquals("Они сгрудились плотнее и ждут конца", outContent.toString());
+        Assertions.assertEquals("Они сгрудились плотнее и ждут конца", outContent.toString());
     }
 
     @Test
@@ -75,7 +74,7 @@ public class Chapter32Test {
         rivulets.meltTheBankDown();
         They they = new They(computerBank);
 
-        assertEquals("Ручейки металла текут в угол, где сидят они...\n" +
+        Assertions.assertEquals("Ручейки металла текут в угол, где сидят они...\n" +
                 "Компьютерный банк плавится, живых комплектующих осталось всего: 9! 8! 7! 6! 5! 4! 3! 2! 1! 0! " +
                 "Компьютерный банк уничтожен.\n" +
                 "Компьютерный банк уничтожен, выход всего один - самовыпиливание", outContent.toString());
@@ -86,7 +85,7 @@ public class Chapter32Test {
         ComputerBank computerBank = new ComputerBank();
         EvilRivulets rivulets = new EvilRivulets(computerBank);
 
-        assertEquals("Компьютерный банк не плавит, ручейков нет\n", outContent.toString());
+        Assertions.assertEquals("Компьютерный банк не плавит, ручейков нет\n", outContent.toString());
     }
 
     @Test
@@ -103,7 +102,7 @@ public class Chapter32Test {
         bombardamento.resume(0);
         bombardamento.stop();
 
-        assertEquals("нежарко и нехолодно, суперски, в общем; обычные звуки повседневной вселенной",
+        Assertions.assertEquals("нежарко и нехолодно, суперски, в общем; обычные звуки повседневной вселенной",
                 Environment.getTempState().toString() + "; " + Environment.getNoiseState());
     }
 }

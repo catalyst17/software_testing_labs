@@ -1,5 +1,6 @@
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SeriesExpansionTest {
     private static final double DELTA = 1e-6;
