@@ -12,7 +12,7 @@ public class PrinterOfCSV {
     private static TreeMap<Double, Double> computeValues(FuncInterface method, double step, double xLength) throws InvocationTargetException, IllegalAccessException {
         TreeMap<Double, Double> values = new TreeMap<>();
         double EPS = 0.0001;
-        for (double i = - xLength / 2; i < xLength / 2; i += step){
+        for (double i = -6.30; i <= 1; i += step){
             double value = (double) method.run(i, EPS);
             values.put(i, value);
         }
@@ -44,6 +44,6 @@ public class PrinterOfCSV {
     }
 
     public static void main(String[] args) {
-            print(Function::calculate, 0.1, 5);
+            print(Function::calculate, 0.1, 6.4);
     }
 }
