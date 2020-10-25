@@ -82,7 +82,7 @@ public class MainAndInfoPagesTest {
     }
 
     @AfterAll
-    static void cleanUp() {
+    static void tearDown() {
         driver.quit();
     }
 }
