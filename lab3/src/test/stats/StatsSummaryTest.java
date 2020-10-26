@@ -1,4 +1,4 @@
-package demo;
+package stats;
 
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
@@ -6,14 +6,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DemoSectionTest {
+public class StatsSummaryTest {
     private static WebDriver driver;
 
     @BeforeAll
@@ -82,6 +79,38 @@ public class DemoSectionTest {
 
         assertNotSame(newStatsContainer.get(1), originalStatsContainer.get(1));
 //        assertFalse(driver.findElements(By.xpath("//g[@class='position-translate']/g[@class='y axis']")).size() > 0);
+    }
+
+    @Test
+    void summaryStatsHelpWorks() {
+        WebElement helpIcon = driver.findElement(By.xpath("//img[@src='/images/help_icon.svg']"));
+
+        if (helpIcon.getAttribute("data-jq-dropdown") == null)
+            helpIcon.click();
+
+        boolean helpInDropdown = driver.findElement(By.xpath("//img[@src='/images/help_icon.svg']")).getAttribute("data-jq-dropdown").equals("#summary-chart-help");
+
+        helpIcon.click();
+
+        assertTrue(helpInDropdown);
+    }
+
+    @Test
+    void otherLanguagesStillNotReady() {
+        String oldH1 = driver.findElement(By.xpath("//body//h1/span")).getText();
+
+        WebElement langChooser = driver.findElement(By.xpath("//footer//div[@id='language-select']"));
+        langChooser.click();
+
+        driver.findElement(By.xpath("//footer//div[@id='language-select-panel']//a")).click();
+
+        String newH1 = driver.findElement(By.xpath("//body//h1/span")).getText();
+
+        boolean notTranslated = oldH1.equals(newH1);
+
+        driver.get("https://statcounter.com/demo/summary/");
+
+        assertTrue(notTranslated);
     }
 
     @AfterAll
