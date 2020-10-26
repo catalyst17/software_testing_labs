@@ -94,17 +94,11 @@ public class StatsPathTest {
 
         inputOS.sendKeys("Linux");
 
-        driverWait.until((ExpectedCondition<Boolean>) driver -> {
-            assert driver != null;
-            return driver.findElement(By.xpath("//div[@id='paging-and-table']")).getAttribute("class").equals("reloading")
-                    || driver.findElements(By.xpath("//div[@id='paging-and-table']/div[@class='loading-icon']")).size() != 0;
-        });
+        driverWait.until((ExpectedCondition<Boolean>) driver -> driver.findElement(By.xpath("//div[@id='paging-and-table']")).getAttribute("class").equals("reloading")
+                    || driver.findElements(By.xpath("//div[@id='paging-and-table']/div[@class='loading-icon']")).size() != 0);
 
-        driverWait.until((ExpectedCondition<Boolean>) driver -> {
-            assert driver != null;
-            return !driver.findElement(By.xpath("//div[@id='paging-and-table']")).getAttribute("class").equals("reloading")
-                    && driver.findElements(By.xpath("//div[@id='paging-and-table']/div[@class='loading-icon']")).size() == 0;
-        });
+        driverWait.until((ExpectedCondition<Boolean>) driver -> !driver.findElement(By.xpath("//div[@id='paging-and-table']")).getAttribute("class").equals("reloading")
+                    && driver.findElements(By.xpath("//div[@id='paging-and-table']/div[@class='loading-icon']")).size() == 0);
 
         List<WebElement> visitors = driver.findElements(By.xpath("//div[@class='results visible-tags']/table"));
 

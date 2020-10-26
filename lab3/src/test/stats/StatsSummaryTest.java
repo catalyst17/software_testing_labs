@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -111,6 +112,58 @@ public class StatsSummaryTest {
         driver.get("https://statcounter.com/demo/summary/");
 
         assertTrue(notTranslated);
+    }
+
+    @Test
+    void editProfileIsDeniedInDemo() {
+        driver.findElement(By.xpath("//span[@data-jq-dropdown='#user-menu']")).click();
+        driver.findElement(By.xpath("//li[@id='menu-edit-profile']/a")).click();
+
+        String message = driver.findElement(By.xpath("//div[@data-type='warning']/../h2")).getText();
+
+        driver.get("https://statcounter.com/demo/summary/");
+
+        assertEquals("Permission Denied", message);
+    }
+
+    @Test
+    void viewAllUsersIsDeniedInDemo() {
+        driver.findElement(By.xpath("//span[@data-jq-dropdown='#user-menu']")).click();
+        driver.findElement(By.xpath("//li[@id='menu-view-all-users']/a")).click();
+
+        String message = driver.findElement(By.xpath("//div[@data-type='warning']/../h2")).getText();
+
+        driver.get("https://statcounter.com/demo/summary/");
+
+        assertEquals("Permission Denied", message);
+    }
+
+    @Test
+    void addUserIsDeniedInDemo() {
+        driver.findElement(By.xpath("//span[@data-jq-dropdown='#user-menu']")).click();
+        driver.findElement(By.xpath("//li[@id='menu-add-user']/a")).click();
+
+        String message = driver.findElement(By.xpath("//div[@data-type='warning']/../h2")).getText();
+
+        driver.get("https://statcounter.com/demo/summary/");
+
+        assertEquals("Permission Denied", message);
+    }
+
+    @Test
+    void logOutSendsToSeeYouSoonPage() {
+        WebDriverWait driverWait = new WebDriverWait(driver, 3);
+
+        driver.findElement(By.xpath("//span[@data-jq-dropdown='#user-menu']")).click();
+        driver.findElement(By.xpath("//li[@id='menu-log-out']/a")).click();
+
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//form[@id='login-form']")));
+
+        String byePhrase = driver.findElement(By.xpath("//header/div[@id='header-content']//h3")).getText();
+
+        driver.get("https://statcounter.com/demo/summary/");
+
+        assertEquals("See you soon!", byePhrase);
     }
 
     @AfterAll
