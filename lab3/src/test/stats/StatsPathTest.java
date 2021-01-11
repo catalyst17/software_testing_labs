@@ -2,6 +2,7 @@ package stats;
 
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,6 +18,7 @@ public class StatsPathTest {
     @BeforeAll
     static void setUp() {
         System.setProperty("webdriver.gecko.driver","/opt/WebDriver/bin/geckodriver");
+        System.setProperty("webdriver.chrome.driver","/opt/WebDriver/bin/chromedriver");
 
         driver = new FirefoxDriver();
 
@@ -80,12 +82,12 @@ public class StatsPathTest {
 
     @Test
     void showsOnlyLinuxVisitors() {
-        WebDriverWait driverWait = new WebDriverWait(driver, 5);
+        WebDriverWait driverWait = new WebDriverWait(driver, 10);
 
         driver.findElement(By.xpath("//div[@id='add-filter']")).click();
         WebElement filtersPanel = driver.findElement(By.xpath("//div[@id='filters']"));
 
-        filtersPanel.findElement(By.xpath("./div[@id='available-filters']//a[@id='more-filters-link']")).click();
+        driverWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='available-filters']//a[@id='more-filters-link']"))).click();
 
         WebElement filterByOS = filtersPanel.findElement(By.xpath("./div[@id='available-filters']//a[@data-value='os']/.."));
         driverWait.until(ExpectedConditions.elementToBeClickable(filterByOS)).click();
@@ -124,7 +126,7 @@ public class StatsPathTest {
         driver.findElement(By.xpath("//div[@id='add-filter']")).click();
         WebElement filtersPanel = driver.findElement(By.xpath("//div[@id='filters']"));
 
-        filtersPanel.findElement(By.xpath("./div[@id='available-filters']//a[@id='more-filters-link']")).click();
+        driverWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='available-filters']//a[@id='more-filters-link']"))).click();
 
         WebElement filterByOS = filtersPanel.findElement(By.xpath("./div[@id='available-filters']//a[@data-value='os']/.."));
         driverWait.until(ExpectedConditions.elementToBeClickable(filterByOS)).click();
@@ -137,15 +139,15 @@ public class StatsPathTest {
 
         inputOS.sendKeys("Linux");
         driverWait.until((ExpectedCondition<Boolean>) driver -> driver.findElement(By.xpath("//div[@id='paging-and-table']")).getAttribute("class").equals("reloading")
-                    || driver.findElements(By.xpath("//div[@id='paging-and-table']/div[@class='loading-icon']")).size() != 0);
+                || driver.findElements(By.xpath("//div[@id='paging-and-table']/div[@class='loading-icon']")).size() != 0);
         driverWait.until((ExpectedCondition<Boolean>) driver -> !driver.findElement(By.xpath("//div[@id='paging-and-table']")).getAttribute("class").equals("reloading")
-                    && driver.findElements(By.xpath("//div[@id='paging-and-table']/div[@class='loading-icon']")).size() == 0);
+                && driver.findElements(By.xpath("//div[@id='paging-and-table']/div[@class='loading-icon']")).size() == 0);
 
         inputCountry.sendKeys("Russian Federation");
         driverWait.until((ExpectedCondition<Boolean>) driver -> driver.findElement(By.xpath("//div[@id='paging-and-table']")).getAttribute("class").equals("reloading")
-                    || driver.findElements(By.xpath("//div[@id='paging-and-table']/div[@class='loading-icon']")).size() != 0);
+                || driver.findElements(By.xpath("//div[@id='paging-and-table']/div[@class='loading-icon']")).size() != 0);
         driverWait.until((ExpectedCondition<Boolean>) driver -> !driver.findElement(By.xpath("//div[@id='paging-and-table']")).getAttribute("class").equals("reloading")
-                    && driver.findElements(By.xpath("//div[@id='paging-and-table']/div[@class='loading-icon']")).size() == 0);
+                && driver.findElements(By.xpath("//div[@id='paging-and-table']/div[@class='loading-icon']")).size() == 0);
 
         List<WebElement> visitors = driver.findElements(By.xpath("//div[@class='results visible-tags']/table"));
 

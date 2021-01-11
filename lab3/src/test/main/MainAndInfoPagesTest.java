@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class MainAndInfoPagesTest {
     @BeforeAll
     static void setUp() {
         System.setProperty("webdriver.gecko.driver","/opt/WebDriver/bin/geckodriver");
+        System.setProperty("webdriver.chrome.driver","/opt/WebDriver/bin/chromedriver");
 
         driver = new FirefoxDriver();
 
