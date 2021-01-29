@@ -23,6 +23,7 @@ public class DeletionTests {
 
     @Test
     void afterDeleteTrackCouldNotRetrieveItFromDB() {
+        fail();
         assertFalse(mongoTrackService.findExact(new Track("Martin Garrix", "Animals")));
     }
 
