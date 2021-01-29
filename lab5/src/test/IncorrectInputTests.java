@@ -40,4 +40,14 @@ public class IncorrectInputTests {
     void checkTheOutputForIncorrectFindArgs() {
         assertEquals("Please, check the specified arguments!\n", taskDispatcher.execute("find Animals"));
     }
+
+    @Test
+    void checkTheOutputForIncorrectList() {
+        assertEquals("Please, check the specified arguments!\n", taskDispatcher.execute("list something"));
+    }
+
+    @Test
+    void checkTheOutputForIncorrectPurge() {
+        assertEquals("Please, check the specified arguments!\n", taskDispatcher.execute("purge all"));
+    }
 }

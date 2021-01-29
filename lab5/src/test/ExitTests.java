@@ -6,8 +6,6 @@ import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class ExitTests {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;

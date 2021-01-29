@@ -2,6 +2,8 @@ import com.mongodb.client.FindIterable;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TaskDispatcher {
     public static final String CREATE = "create";
@@ -19,7 +21,12 @@ public class TaskDispatcher {
     private String message;
     private List<String> commandParts;
 
+    private Logger logger;
+
     public TaskDispatcher() {
+        logger = Logger.getLogger("org.mongodb.driver");
+        logger.setLevel(Level.SEVERE);
+
         mongoTrackService = new MongoTrackService();
     }
 
@@ -49,7 +56,6 @@ public class TaskDispatcher {
             case EXIT:
                 System.out.println("Goodbye!");
                 System.exit(0);
-                return null;
             default:
                 return "Specified command doesn't exist!\n";
         }
@@ -65,7 +71,7 @@ public class TaskDispatcher {
 
         if (mongoTrackService.insert(new Track(author, track_name)))
             return "Track info has been added\n";
-        else return "This info has already existed in the catalog!\n";
+        else return "This info already exists in the catalog!\n";
     }
 
     private String delete() {
@@ -95,6 +101,8 @@ public class TaskDispatcher {
         StringBuilder sb = new StringBuilder();
 
         FindIterable<Track> result = sorted ? mongoTrackService.getAllSorted() : mongoTrackService.getAll();
+        if (result.first() == null)
+            return "Catalog is empty for now\n";
         for (Track track : result) {
             sb.append(track.getAuthor()).append(" - ").append(track.getTrackName()).append("\n");
         }
@@ -132,18 +140,18 @@ public class TaskDispatcher {
         else return "The track has not been found!\n";
     }
 
-    private String generateHelpMessage() {
-        StringBuilder sb = new StringBuilder("Tracks Catalog Manager v0.1 Here is the help information on the commands you can use:\n");
+    String generateHelpMessage() {
+        StringBuilder sb = new StringBuilder("Tracks Catalog Manager v0.1\n\nHere is the help information on the commands you can use:\n\n");
         sb.append("create <Author> - <Track> \t lets you to add a new track info\n");
         sb.append("delete <Author> - <Track> \t lets you to delete the track info\n");
-        sb.append("purge \t lets you to delete all the info from the catalog\n");
-        sb.append("list \t lets you to get all the info from the catalog\n");
-        sb.append("list-sorted \t lets you to get all the info from the catalog sorted by the author name\n");
+        sb.append("purge \t\t\t\t\t\t lets you to delete all the info from the catalog\n");
+        sb.append("list \t\t\t\t\t\t lets you to get all the info from the catalog\n");
+        sb.append("list-sorted \t\t\t\t lets you to get all the info from the catalog sorted by the author name\n");
         sb.append("search-by-author <Author> \t lets you to get all the tracks from the specified author\n");
-        sb.append("search-by-name <Track> \t lets you to get all the tracks from the specified author\n");
+        sb.append("search-by-name <Track> \t\t lets you to get all the tracks from the specified author\n");
         sb.append("find <Author> - <Track> \t lets you to find the exact track\n");
-        sb.append("help \t lets you to see the help message when you want it\n");
-        sb.append("exit \t closes the app\n");
+        sb.append("help \t\t\t\t\t\t lets you to see the help message when you want it\n");
+        sb.append("exit \t\t\t\t\t\t closes the app\n");
 
         return sb.toString();
     }

@@ -24,7 +24,7 @@ public class CreationTests {
 
     @Test
     void redundantCreateIsFollowedByDescriptionalMessage() {
-        assertEquals("This info has already existed in the catalog!\n", taskDispatcher.execute("create Martin Garrix - Animals"));
+        assertEquals("This info already exists in the catalog!\n", taskDispatcher.execute("create Martin Garrix - Animals"));
     }
 
     @Test

@@ -12,7 +12,10 @@ public class SortTests {
     static void createTestTracks() {
         taskDispatcher = new TaskDispatcher();
         mongoTrackService = new MongoTrackService();
+    }
 
+    @Test
+    void checkTheResultIsCorrect() {
         mongoTrackService.purge();
 
         mongoTrackService.insert(new Track("Martin Garrix", "Animals"));
@@ -20,22 +23,28 @@ public class SortTests {
         mongoTrackService.insert(new Track("Watsky", "Ugly Faces"));
         mongoTrackService.insert(new Track("Watsky", "Tsunami"));
         mongoTrackService.insert(new Track("Linkin Park", "Powerless"));
-    }
 
-    @Test
-    void checkTheResultIsCorrect() {
         StringBuilder sb = new StringBuilder("Linkin Park - Powerless\n");
         sb.append("Martin Garrix - Animals\n");
         sb.append("Martin Garrix - Tsunami\n");
         sb.append("Watsky - Ugly Faces\n");
         sb.append("Watsky - Tsunami\n");
         assertEquals(sb.toString(), taskDispatcher.execute("list-sorted"));
+
+        mongoTrackService.purge();
+    }
+
+    @Test
+    void checkCatalogIsEmptyMsg() {
+        mongoTrackService.purge();
+
+        assertEquals("Catalog is empty for now\n", taskDispatcher.execute("list-sorted"));
+
+        mongoTrackService.purge();
     }
 
     @AfterAll
     static void deleteTestTracks() {
-        mongoTrackService.purge();
-
         mongoTrackService.finish();
     }
 }
