@@ -1,17 +1,19 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.net.UnknownHostException;
 
-public class CreationTest {
+public class CreationTests {
     private static String creationResult;
-    private static TaskDispatcher taskDispatcher;
+    private static MongoTrackService mongoTrackService;
 
     @BeforeAll
-    static void createTestTrack() {
-        taskDispatcher = new TaskDispatcher();
+    static void createTestTrack() throws UnknownHostException{
+        TaskDispatcher taskDispatcher = new TaskDispatcher();
+        mongoTrackService = new MongoTrackService();
 
         creationResult = taskDispatcher.execute("create Martin Garrix - Animals");
     }
@@ -22,9 +24,14 @@ public class CreationTest {
     }
 
     @Test
-    void afterCreateTrackCouldRetrieveItFromDB() throws UnknownHostException {
-        MongoTrackService mongoTrackService = new MongoTrackService();
-
+    void afterCreateTrackCouldRetrieveItFromDB() {
         assertTrue(mongoTrackService.findExact(new Track("Martin Garrix", "Animals")));
+    }
+
+    @AfterAll
+    static void deleteTestTrack() {
+        mongoTrackService.delete(new Track("Martin Garrix", "Animals"));
+
+        mongoTrackService.finish();
     }
 }

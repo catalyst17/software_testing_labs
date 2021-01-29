@@ -6,18 +6,18 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.net.UnknownHostException;
 
-import static com.mongodb.client.model.Filters.eq;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public class MongoTrackService {
     private MongoCollection<Track> collection;
+    private final MongoClient mongoClient;
 
     public MongoTrackService() throws UnknownHostException {
         CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 
-        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://u9zwdrhjwwzvvtsuweky:iHfSTuPiOt94ocFCDZHr@bkgvfdjal5omakq-mongodb.services.clever-cloud.com:27017/?authSource=bkgvfdjal5omakq"));
+        mongoClient = new MongoClient(new MongoClientURI("mongodb://u9zwdrhjwwzvvtsuweky:iHfSTuPiOt94ocFCDZHr@bkgvfdjal5omakq-mongodb.services.clever-cloud.com:27017/?authSource=bkgvfdjal5omakq"));
 
         MongoDatabase database = mongoClient.getDatabase("bkgvfdjal5omakq");
 
@@ -27,10 +27,35 @@ public class MongoTrackService {
     }
 
     boolean insert(Track track) {
-        return false;
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("author", track.getAuthor());
+        searchQuery.put("track_name", track.getTrackName());
+
+        if (collection.find(searchQuery).first() != null) {
+            return false;
+        }
+
+        collection.insertOne(track);
+        return true;
     }
 
     boolean findExact(Track track) {
-        return false;
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("author", track.getAuthor());
+        searchQuery.put("track_name", track.getTrackName());
+
+        return collection.find(searchQuery).first() != null;
+    }
+
+    boolean delete(Track track) {
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("author", track.getAuthor());
+        searchQuery.put("track_name", track.getTrackName());
+
+        return collection.deleteOne(searchQuery).getDeletedCount() == 1;
+    }
+
+    void finish() {
+        mongoClient.close();
     }
 }
