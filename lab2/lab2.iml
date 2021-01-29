@@ -8,16 +8,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="annotations-19.0.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="JUnit5.4" level="project" />
     <orderEntry type="library" name="org.projectlombok:lombok:1.18.12" level="project" />
     <orderEntry type="module-library" scope="TEST">
       <library name="org.mockito:mockito-core:2.0.111-beta" type="repository">
         <properties maven-id="org.mockito:mockito-core:LATEST" />
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-core/3.5.15/mockito-core-3.5.15.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/net/bytebuddy/byte-buddy/1.10.15/byte-buddy-1.10.15.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/net/bytebuddy/byte-buddy-agent/1.10.15/byte-buddy-agent-1.10.15.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-core/3.7.7/mockito-core-3.7.7.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/net/bytebuddy/byte-buddy/1.10.19/byte-buddy-1.10.19.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/net/bytebuddy/byte-buddy-agent/1.10.19/byte-buddy-agent-1.10.19.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/objenesis/objenesis/3.1/objenesis-3.1.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -26,5 +24,7 @@
     </orderEntry>
     <orderEntry type="library" scope="TEST" name="org.mockito:mockito-inline:3.5.13" level="project" />
     <orderEntry type="library" name="au.com.bytecode:opencsv:2.4" level="project" />
+    <orderEntry type="library" name="org.junit.jupiter:junit-jupiter:5.4.0" level="project" />
+    <orderEntry type="library" name="org.jetbrains:annotations:19.0.0" level="project" />
   </component>
 </module>
