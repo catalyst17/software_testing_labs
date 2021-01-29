@@ -26,15 +26,32 @@ public class MongoTrackService {
     }
 
     boolean insert(Track track) {
-        return false;
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("author", track.getAuthor());
+        searchQuery.put("track_name", track.getTrackName());
+
+        if (collection.find(searchQuery).first() != null) {
+            return false;
+        }
+
+        collection.insertOne(track);
+        return true;
     }
 
     boolean findExact(Track track) {
-        return false;
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("author", track.getAuthor());
+        searchQuery.put("track_name", track.getTrackName());
+
+        return collection.find(searchQuery).first() != null;
     }
 
     boolean delete(Track track) {
-        return false;
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("author", track.getAuthor());
+        searchQuery.put("track_name", track.getTrackName());
+
+        return collection.deleteOne(searchQuery).getDeletedCount() == 1;
     }
 
     FindIterable<Track> getAll() {
@@ -42,7 +59,7 @@ public class MongoTrackService {
     }
 
     void purge() {
-
+        collection.deleteMany(new BasicDBObject());
     }
 
     void finish() {
