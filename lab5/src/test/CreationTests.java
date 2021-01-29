@@ -4,14 +4,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.net.UnknownHostException;
-
 public class CreationTests {
     private static String creationResult;
     private static MongoTrackService mongoTrackService;
 
     @BeforeAll
-    static void createTestTrack() throws UnknownHostException{
+    static void createTestTrack() {
         TaskDispatcher taskDispatcher = new TaskDispatcher();
         mongoTrackService = new MongoTrackService();
 
