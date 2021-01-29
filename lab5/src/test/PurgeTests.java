@@ -25,13 +25,17 @@ public class PurgeTests {
 
     @Test
     void checkCatalogIsEmptyAfterPurge() {
-        fail();
         assertNull(mongoTrackService.getAll().first());
     }
 
     @Test
+    void theCatalogWasAlreadyEmptyMessage() {
+        assertEquals("The catalog was already empty!\n", taskDispatcher.execute("purge"));
+    }
+
+    @Test
     void afterPurgeConfirmationIsReceived() {
-        assertEquals("The catalog has been emptied", purgeResult);
+        assertEquals("The catalog has been emptied\n", purgeResult);
     }
 
     @AfterAll

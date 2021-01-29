@@ -35,8 +35,18 @@ public class SearchTests {
     }
 
     @Test
+    void checkThereIsNoResultForSearchByAuthor() {
+        assertEquals("Nothing has been found!\n", taskDispatcher.execute("search-by-author Park"));
+    }
+
+    @Test
     void checkTheResultIsCorrectForUglyFaces() {
         assertEquals("Watsky - Ugly Faces\n", taskDispatcher.execute("search-by-name Ugly Faces"));
+    }
+
+    @Test
+    void checkThereIsNoResultForSearchByName() {
+        assertEquals("Nothing has been found!\n", taskDispatcher.execute("search-by-name Ugly"));
     }
 
     @Test
@@ -49,6 +59,11 @@ public class SearchTests {
     @Test
     void checkTheResultIsCorrectForTheExactMatch() {
         assertEquals("Martin Garrix - Tsunami\n", taskDispatcher.execute("find Martin Garrix - Tsunami"));
+    }
+
+    @Test
+    void checkThereIsNoResultForFind() {
+        assertEquals("The track has not been found!\n", taskDispatcher.execute("find Martin Garrix - Nonexistence"));
     }
 
     @AfterAll

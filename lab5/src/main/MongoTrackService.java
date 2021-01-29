@@ -5,6 +5,7 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
+import static com.mongodb.client.model.Filters.eq;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
@@ -58,8 +59,20 @@ public class MongoTrackService {
         return collection.find();
     }
 
-    void purge() {
-        collection.deleteMany(new BasicDBObject());
+    FindIterable<Track> getAllSorted() {
+        return collection.find().sort(new BasicDBObject("author", 1));
+    }
+
+    FindIterable<Track> searchByAuthor(String author) {
+        return collection.find(eq("author", author));
+    }
+
+    FindIterable<Track> searchByTrackName(String trackName) {
+        return collection.find(eq("track_name", trackName));
+    }
+
+    boolean purge() {
+        return collection.deleteMany(new BasicDBObject()).getDeletedCount() > 0;
     }
 
     void finish() {
