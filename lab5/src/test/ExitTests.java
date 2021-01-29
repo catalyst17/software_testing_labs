@@ -22,7 +22,7 @@ public class ExitTests {
 
         taskDispatcher.execute("exit");
 
-        assertEquals("Goodbye!", outContent.toString());
+        assertEquals("Goodbye!\n", outContent.toString());
     }
 
     @AfterEach
