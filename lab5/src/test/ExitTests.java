@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -17,12 +18,11 @@ public class ExitTests {
     }
 
     @Test
-    void checkGoodbyeMsg() {
+    @ExpectSystemExitWithStatus(0)
+    void checkThatSystemExitsCorrectly() {
         TaskDispatcher taskDispatcher = new TaskDispatcher();
 
         taskDispatcher.execute("exit");
-
-        assertEquals("Goodbye!\n", outContent.toString());
     }
 
     @AfterEach

@@ -48,6 +48,8 @@ public class TaskDispatcher {
                 return generateHelpMessage();
             case EXIT:
                 System.out.println("Goodbye!");
+                System.exit(0);
+                return null;
             default:
                 return "Specified command doesn't exist!\n";
         }
